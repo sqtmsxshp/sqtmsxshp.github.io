@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Esquentame, o seu sex shop online. Diversos produtos para você sentir e dar muito prazer, Entregamos em Sorocaba e Votorantim com total discrição e respeito ao cliente">
+  <meta name="keywords" content="sex shop votorantim, sex shop sorocaba, sex shop, esquentame, sex toys, fantasias sexuais, livro sexo, brinquedos de adulto">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+  <link rel="icon" href="assets/img/favicon.png">
+  <link rel="stylesheet" href="assets/css/w3.css">
+  <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <title>Esquentame - Sex Shop Sorocaba e Votorantim</title>
+</head>
+<body>
+  <header id="home"> 
+    <img id="logo" src="assets/img/logo.png" alt="logo">
+    <div id="chevron">
+      <a href="#menu" id="chevron-down"><i class="fas fa-chevron-down"></i></a>        
+    </div>
+  </header>
+
+  <nav id="menu" class="w3-bar w3-black">
+    <a href="#home" class="w3-bar-item w3-button">Home</a>
+    <a href="#introduction" class="w3-bar-item w3-button">Sobre&nbsp;nós</a>
+    <a href="#products" class="w3-bar-item w3-button">Produtos</a>
+    <a href="#ebooks" class="w3-bar-item w3-button">Livros</a>
+    <a href="#contact" class="w3-bar-item w3-button">Contato</a>
+  </nav>
+
+  <main id="app">
+    <!-- ***** INTRODUCTION ***** -->
+    <section id="introduction">
+      <div>
+        <h2 class="w3-center">Sobre nós</h2>
+        <p>Somos uma empresa online, atualmente vendemos e entregamos em Sorocaba e
+          Votorantim - SP, o motivo da nossa existência é proporcionar as pessoas formas de sentirem muito prazer,
+          pois diversos casais caem na rotina e não inovam principalmente na cama, o que pode acabar gerando futuros transtornos e brigas, acreditamos que a inovação é o essencial para viver uma vida plena e completa, sem ficar na mesmice.</p>
+        <h3>Missão</h3>
+        <p>Nossa missão é que nossos produtos lhe proporcionem momentos de prazer intenso e felicidade</p>
+        <h3>Visão</h3>
+        <p> Ser referência em toda a região, deixar as pessoas satisfeitas com o resultado dos nossos produtos e do nosso atendimento, com isso ganharmos indicações e futuramente expandir as vendas para todo o país.</p>
+        <h3>Valores:</h3>    
+        <p><i class="fas fa-circle"></i> Respeitar todos os seus fetiches</p>
+        <p><i class="fas fa-circle"></i> Respeitar sua opção sexual</p>
+        <p><i class="fas fa-circle"></i> Responder todos os clientes com cordialidade</p>
+        <p><i class="fas fa-circle"></i> Honestidade e transparência</p>
+        <p><i class="fas fa-circle"></i> Nunca vender apenas pensando no lucro próprio, e sim na satisfação do cliente</p>
+      </div>      
+    </section>
+
+    <!-- ***** PRODUCTS ***** -->
+    <section id="products">
+      <h2 style="margin-left: 20px;">Produtos</h2>
+      <div v-for="category in categories">
+        <button @click="toogleProducts(category.id)" class="menu-produtos w3-button w3-block w3-left-align w3-border w3-border-black " style="background-color: #ff9600;">
+          <div style="display: grid; grid-template-columns: auto  1fr auto;">
+            <h3 style="display: inline-block; margin-bottom: 1em;"> {{ category.name }} <span style="font-size: 0.7em">({{ category.products.length }} itens)</span></h3>           
+            <div></div>
+            <i :id="'chevron-'+category.id" style="align-self: center; font-size: 2em;" class="fas fa-chevron-down"></i>
+          </div>
+        </button>
+
+        <div :id="category.id" class="w3-hide">
+          <figure v-for="item in category.products">
+            <img v-bind:src="item.img" alt="Norway">
+            <figcaption class="w3-container">
+              <p><b>{{ item.title }}</b></p>
+              <p class="limitText">{{ item.description }}</p>
+              <button @click="showModal(item)" class="btn-detalhe">+ Detalhes</button><br>
+              <p><b>{{ item.price }}</b></p>
+            </figcaption>
+          </figure>    
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** MODAL PRODUCT ***** -->
+    <div id="modal-product" class="w3-modal" style="z-index: 100 !important">
+      <div class="w3-modal-content w3-animate-zoom w3-card-4" style="text-align: center;">
+        <div class="w3-container modal-bkg"> 
+          <span onclick="document.getElementById('modal-product').style.display='none'" 
+          class="w3-button w3-display-topright">&times;</span>
+          <h2 id="modal-title"> {{ modal.title }} </h2>
+        </div>
+        <div class="w3-container">
+          <img id="modal-img" v-bind:src="modal.img">
+          <p id="modal-description" style="text-align: justify"> {{ modal.description }}</p>
+        </div>
+        <div class="w3-container modal-bkg">
+          <h3 id="modal-price" class="large"> {{ modal.price }} </h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- ***** EBOOKS ***** -->
+    <section id="ebooks">
+      <h2>E-books</h2>
+      <p>Além de nossos produtos físicos, indicamos alguns livros digitais que com certeza irão mudar a sua vida sexual e te transformar em uma pessoa muito melhor. Receba diretamente no seu e-mail</p>
+      <div id="ebooks-grid">
+        <div class="ebooks" v-for="ebook in ebooks">
+          <h3> {{ ebook.title }} </h3>
+          <img v-bind:src="ebook.img" alt="">
+          <p>{{ ebook.description }}</p>
+          <a target="_blank" :href="ebook.link"><button class="btn-ebooks">Tenho interesse</button></a>
+        </div>      
+      </div>      
+    </section>
+
+    <!-- ***** CONTACT ***** -->
+    <section id="contact">
+      <h2>Entregas em Sorocaba e Votorantim - SP</h2>
+      <h3>Para compras ou mais informações entre em contato por um dos meios abaixo</h3>
+      <div>
+        <p><i class="fab fa-instagram"></i> Instagram: @esquentame</p>
+        <p><i class="fab fa-whatsapp"></i> WhatsApp: (15) 98817-9954</p>
+        <p><i class="far fa-envelope"></i> Email: esquentame@gmail.com</p>
+      </div>
+      <p><i class="fas fa-asterisk"></i> Todas as formas de contato e entregas são totalmente discretas</p>
+    </section>    
+  </main>
+
+  <footer>
+    <p>DESENVOLVIDO POR <a target="_blank" href="http://fjstatic.surge.sh">FJSTATIC</a></p>
+  </footer>
+
+  <script src="assets/js/jquery-3.3.1.min.js"></script>
+  <script src="assets/js/vue.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
